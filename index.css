@@ -65,9 +65,63 @@ footer {
   border-bottom-right-radius: 10px;
 }
 
-button{
-  padding: 5px 10px;
-  background-color: darkorange;
-  border: none;
-  border-radius: 5px;
+ul{
+  width: 100%;
+  list-style: none;
+  padding: 0 .25rem .25rem;
+}
+
+ul > li::before{
+  content: "\200B";
+}
+
+.item{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: .5rem 0 .5rem .5rem;
+  margin: .25rem .5rem;
+  background-color: #eee;
+  color: black;
+  border-radius: 10px;
+}
+
+/* .item:first-child{
+  margin: 0;
+} */
+
+.item > input[type="checkbox"]{
+  text-align: center;
+  width: 2.5rem;
+  width: 48px;
+  min-width: 48px;
+  height: 2.5rem;
+  height: 48px;
+  min-height: 48px;
+  cursor: pointer;
+  margin-right: .5rem;
+}
+
+.item > input[type="checkbox"]:focus + label {
+  text-decoration: underline;
+}
+
+.item > label{
+  font-size: .75rem;
+  flex-grow: 1;
+}
+
+.item > svg{
+  width: 48px;
+  min-width: 48px;
+  height: 25px;
+  font-size: 1rem;
+  color: rgb(233, 105, 55);
+  cursor: pointer;
+}
+
+.item > svg:focus,
+.item > svg:hover{
+  color: red;
+  outline: none;
 }
