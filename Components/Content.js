@@ -7,32 +7,61 @@ const Content = () => {
             {
                 id: 1,
                 checked: false,
-                item:"One half pound bag of Cocoa Covered Almonds Unsalted"
+                item:"Travel to Japan"
             },
             {
                 id: 2,
                 checked: false,
-                item:"Item 2"
+                item:"Learn to swim"
             },
             {
                 id: 3,
                 checked: false,
-                item:"Item 3"
+                item:"Take selfies every so often"
             }
         ]
     );
 
+    const checkBox = (id) => {
+        const myChecklistItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);      
+        setItems(myChecklistItems);
+        localStorage.setItem("bucketlist", JSON.stringify(myChecklistItems));
+    };
+
+    const deleteItem = (id) => {
+        const myChecklistItems = items.filter((item) => item.id !== id);
+        setItems(myChecklistItems);
+        localStorage.setItem("bucketlist", JSON.stringify(myChecklistItems));
+    };
+
     return (
         <main>
-            <ul>
+            {items.length ? (
+                <ul>
                 {items.map((item) => (
                     <li className="item" key={item.id}>
-                        <input type="checkbox" checked={item.checked} />
-                        <label>{item.item}</label>
-                        <FaTrashAlt role="button" tabIndex="0"/>
+                        <input
+                            type="checkbox"
+                            onChange={() => checkBox(item.id)}
+                            checked={item.checked}
+                        />
+                        <label
+                            onDoubleClick={() => checkBox(item.id)}
+                            style={(item.checked) ? { textDecoration: "line-through", color: "grey" } : null}
+                        >{item.item}</label>
+                        <FaTrashAlt
+                            onClick={()=>deleteItem(item.id)}
+                            role="button"
+                            tabIndex="0"
+                        />
                     </li>
                 ))}
            </ul>
+            ) : (
+                <p style={{marginTop:"2rem"}}>
+                    Your checklist is empty!        
+                </p>
+            )}
         </main>
     );
 }

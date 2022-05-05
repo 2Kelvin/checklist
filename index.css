@@ -86,10 +86,6 @@ ul > li::before{
   border-radius: 10px;
 }
 
-/* .item:first-child{
-  margin: 0;
-} */
-
 .item > input[type="checkbox"]{
   text-align: center;
   width: 2.5rem;
