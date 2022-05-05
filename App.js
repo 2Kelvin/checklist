@@ -5,7 +5,7 @@ import Footer from "./Components/Footer";
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Header title="CHECKLIST"/>
       <Content />
       <Footer/>
     </div>
