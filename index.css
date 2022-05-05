@@ -112,7 +112,7 @@ ul > li::before{
   min-width: 48px;
   height: 25px;
   font-size: 1rem;
-  color: rgb(233, 105, 55);
+  color: rgb(236, 107, 56);
   cursor: pointer;
 }
 
