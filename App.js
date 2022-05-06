@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="App">
       <Header title="CHECKLIST"/>
-      <Content items={items} checkBox={checkBox} deleteItem={deleteItem} />
+      <Content items={items} checkBox={checkBox} deleteItem={deleteItem}/>
       <Footer length={items.length} />
     </div>
   );
