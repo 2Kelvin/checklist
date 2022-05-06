@@ -2,7 +2,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const OneItem = ({ item, checkBox, deleteItem }) => {
     return (
-        <li className="item" key={item.id}>
+        <li className="item">
             <input
                 type="checkbox"
                 onChange={() => checkBox(item.id)}

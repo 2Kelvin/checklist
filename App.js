@@ -2,6 +2,7 @@ import { useState } from "react";
 import Content from "./Components/Content";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import AddItems from "./Components/AddItems";
 
 function App() {
   const [items, setItems] = useState(
@@ -23,6 +24,8 @@ function App() {
         }
     ]
   );
+
+  const [newItem, setNewItem] = useState("");
   
   const checkBox = (id) => {
     const myChecklistItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);      
@@ -35,10 +38,17 @@ function App() {
     setItems(myChecklistItems);
     localStorage.setItem("bucketlist", JSON.stringify(myChecklistItems));
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newItem) return;
+    setNewItem("");
+  };
   
   return (
     <div className="App">
-      <Header title="CHECKLIST"/>
+      <Header title="CHECKLIST" />
+      <AddItems newItem={newItem} setNewItem={setNewItem} handleSubmit={handleSubmit} />
       <Content items={items} checkBox={checkBox} deleteItem={deleteItem}/>
       <Footer length={items.length} />
     </div>
