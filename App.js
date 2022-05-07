@@ -5,43 +5,40 @@ import Footer from "./Components/Footer";
 import AddItems from "./Components/AddItems";
 
 function App() {
-  const [items, setItems] = useState(
-    [
-        {
-            id: 1,
-            checked: false,
-            item:"Travel to Japan"
-        },
-        {
-            id: 2,
-            checked: false,
-            item:"Learn to swim"
-        },
-        {
-            id: 3,
-            checked: false,
-            item:"Take selfies every so often"
-        }
-    ]
-  );
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem("checklist")));
 
   const [newItem, setNewItem] = useState("");
+
+  const setAndSaveItems = (newItems) => {
+    setItems(newItems);
+    localStorage.setItem("checklist", JSON.stringify(newItems));
+  };
+
+  const addItem = (item) => {
+    const id = items.length ? items[items.length - 1].id + 1 : 1;
+    const typedNewItem = {
+      id,
+      checked: false,
+      item
+    };
+    const myChecklistItems = [...items, typedNewItem];
+    setAndSaveItems(myChecklistItems);
+  };
   
   const checkBox = (id) => {
     const myChecklistItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);      
-    setItems(myChecklistItems);
-    localStorage.setItem("bucketlist", JSON.stringify(myChecklistItems));
+    setAndSaveItems(myChecklistItems);
   };
 
   const deleteItem = (id) => {
     const myChecklistItems = items.filter((item) => item.id !== id);
-    setItems(myChecklistItems);
-    localStorage.setItem("bucketlist", JSON.stringify(myChecklistItems));
+    setAndSaveItems(myChecklistItems);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newItem) return;
+    addItem(newItem);
     setNewItem("");
   };
   

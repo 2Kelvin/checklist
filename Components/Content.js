@@ -6,9 +6,9 @@ const Content = ({items, checkBox, deleteItem}) => {
             {items.length ? (
                 <ItemList items={items} checkBox={checkBox} deleteItem={deleteItem}/>
             ) : (
-                <p style={{marginTop:"12rem"}}>
-                    Nothing to do babyy!        
-                </p>
+                <p style={{marginTop:"11rem", textAlign: "center"}}>
+                    You have no items added to the checklist       
+                </p>    
             )}
         </main>
     );
