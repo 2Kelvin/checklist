@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { FaPlus } from "react-icons/fa";
 
 const AddItems = ({newItem, setNewItem, handleSubmit}) => {

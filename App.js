@@ -45,11 +45,26 @@ function App() {
   
   return (
     <div className="App">
-      <Header title="CHECKLIST" />
-      <AddItems newItem={newItem} setNewItem={setNewItem} handleSubmit={handleSubmit} />
-      <SearchItem search={search} setSearch={setSearch}/>
-      <Content items={items} checkBox={checkBox} deleteItem={deleteItem}/>
-      <Footer length={items.length} />
+      <Header
+        title="CHECKLIST"
+      />
+      <AddItems
+        newItem={newItem}
+        setNewItem={setNewItem}
+        handleSubmit={handleSubmit}
+      />
+      <SearchItem
+        search={search}
+        setSearch={setSearch}
+      />
+      <Content
+        items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
+        checkBox={checkBox}
+        deleteItem={deleteItem}
+      />
+      <Footer
+        length={items.length}
+      />
     </div>
   );
 }
