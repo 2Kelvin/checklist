@@ -6,7 +6,7 @@ import AddItems from "./Components/AddItems";
 import SearchItem from "./Components/SearchItem";
 
 function App() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("checklist")));
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem("checklist")) || []);
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
 
