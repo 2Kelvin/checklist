@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Content from "./Components/Content";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -10,10 +10,9 @@ function App() {
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
 
-  const setAndSaveItems = (newItems) => {
-    setItems(newItems);
-    localStorage.setItem("checklist", JSON.stringify(newItems));
-  };
+  useEffect(() => {
+    localStorage.setItem("checklist", JSON.stringify(items));
+  }, [items] )
 
   const addItem = (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
@@ -23,17 +22,17 @@ function App() {
       item
     };
     const myChecklistItems = [...items, typedNewItem];
-    setAndSaveItems(myChecklistItems);
+    setItems(myChecklistItems);
   };
   
   const checkBox = (id) => {
     const myChecklistItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);      
-    setAndSaveItems(myChecklistItems);
+    setItems(myChecklistItems);
   };
 
   const deleteItem = (id) => {
     const myChecklistItems = items.filter((item) => item.id !== id);
-    setAndSaveItems(myChecklistItems);
+    setItems(myChecklistItems);
   };
 
   const handleSubmit = (e) => {
