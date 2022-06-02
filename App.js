@@ -5,6 +5,7 @@ import Footer from "./Components/Footer";
 import AddItems from "./Components/AddItems";
 import SearchItem from "./Components/SearchItem";
 import Loading from "./Components/Loading";
+import apiRequest from "./Components/apiRequest";
 
 function App() {
   const API_URL = "http://localhost:3500/items"; 
@@ -22,7 +23,6 @@ function App() {
         const response = await fetch(API_URL);
         if (!response.ok) throw Error("Did not receive expected data");
         const dbListItems = await response.json(); 
-        console.log(dbListItems);
         setItems(dbListItems);
         setFetchDbError(null);
       } catch (error) {
@@ -37,7 +37,7 @@ function App() {
     }, 2000);
   }, [] )
 
-  const addItem = (item) => {
+  const addItem = async (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const typedNewItem = {
       id,
@@ -46,6 +46,17 @@ function App() {
     };
     const myChecklistItems = [...items, typedNewItem];
     setItems(myChecklistItems);
+
+    // adding items to the JSON database API
+    const postOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/JSON"
+      },
+      body: JSON.stringify(typedNewItem)
+    };
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) setFetchDbError(result);
   };
   
   const checkBox = (id) => {
