@@ -6,26 +6,29 @@ import AddItems from "./Components/AddItems";
 import SearchItem from "./Components/SearchItem";
 
 function App() {
-  const API_URL = "http://localhost:3500/items"; 
+  const API_URL = "http://localhost:3500/iteems"; 
 
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
+  const [fetchDbError, setFetchDbError] = useState(null);
 
   useEffect(() => {
 
-    const fetchItems = async () => {
+    const fetchDbItems = async () => {
       try {
         const response = await fetch(API_URL);
+        if (!response.ok) throw Error("Did not receive expected data");
         const dbListItems = await response.json(); 
         console.log(dbListItems);
         setItems(dbListItems);
+        setFetchDbError(null);
       } catch (error) {
-        console.log(error.stack);
+        setFetchDbError(error.message);
       }
     };
 
-    fetchItems();
+    fetchDbItems();
   }, [] )
 
   const addItem = (item) => {
@@ -70,11 +73,14 @@ function App() {
         search={search}
         setSearch={setSearch}
       />
-      <Content
-        items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
-        checkBox={checkBox}
-        deleteItem={deleteItem}
-      />
+      <main>
+        {fetchDbError && <p style={{color:'red', marginTop:'2rem'}}>{`Error: ${fetchDbError}`}</p>}
+        <Content
+          items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
+          checkBox={checkBox}
+          deleteItem={deleteItem}
+        />
+      </main>
       <Footer
         length={items.length}
       />
