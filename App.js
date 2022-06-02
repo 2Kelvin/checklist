@@ -74,12 +74,14 @@ function App() {
         setSearch={setSearch}
       />
       <main>
-        {fetchDbError && <p style={{color:'red', marginTop:'2rem'}}>{`Error: ${fetchDbError}`}</p>}
-        <Content
+        {/* if error=true, display the error in the UI */}
+        {fetchDbError && <p style={{color:'red', marginTop:'6rem', fontSize:'26px'}}>{`Error: ${fetchDbError}`}</p>}
+        {/* if error=false display Content */}
+        {!fetchDbError && <Content
           items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
           checkBox={checkBox}
           deleteItem={deleteItem}
-        />
+        />}
       </main>
       <Footer
         length={items.length}
