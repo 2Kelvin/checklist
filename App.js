@@ -4,14 +4,16 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import AddItems from "./Components/AddItems";
 import SearchItem from "./Components/SearchItem";
+import Loading from "./Components/Loading";
 
 function App() {
-  const API_URL = "http://localhost:3500/iteems"; 
+  const API_URL = "http://localhost:3500/items"; 
 
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
   const [fetchDbError, setFetchDbError] = useState(null);
+  const [loadingDbData, setLoadingDbData] = useState(true);
 
   useEffect(() => {
 
@@ -25,10 +27,14 @@ function App() {
         setFetchDbError(null);
       } catch (error) {
         setFetchDbError(error.message);
+      } finally {
+        setLoadingDbData(false);
       }
     };
 
-    fetchDbItems();
+    setTimeout(() => {
+      fetchDbItems();
+    }, 2000);
   }, [] )
 
   const addItem = (item) => {
@@ -74,10 +80,15 @@ function App() {
         setSearch={setSearch}
       />
       <main>
+        {loadingDbData &&
+          <div style={{marginTop:'5rem'}}>
+            <p style={{ color: 'dodgerblue', fontSize: '27px' }}>Loading data...</p>
+            <div> <Loading/> </div>
+          </div>}
         {/* if error=true, display the error in the UI */}
         {fetchDbError && <p style={{color:'red', marginTop:'6rem', fontSize:'26px'}}>{`Error: ${fetchDbError}`}</p>}
-        {/* if error=false display Content */}
-        {!fetchDbError && <Content
+        {/* if error=false & data is not loading display Content */}
+        {!fetchDbError && !loadingDbData && <Content
           items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
           checkBox={checkBox}
           deleteItem={deleteItem}
