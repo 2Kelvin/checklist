@@ -47,7 +47,7 @@ function App() {
     const myChecklistItems = [...items, typedNewItem];
     setItems(myChecklistItems);
 
-    // adding items to the JSON database API
+    // adding items to the JSON database API as we add them in the checklist
     const postOptions = {
       method: "POST",
       headers: {
@@ -59,9 +59,22 @@ function App() {
     if (result) setFetchDbError(result);
   };
   
-  const checkBox = (id) => {
+  const checkBox = async (id) => {
     const myChecklistItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);      
     setItems(myChecklistItems);
+
+    const myItem = myChecklistItems.filter((item) => item.id === id);
+    const updateOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/JSON"
+      },
+      body: JSON.stringify({checked: myItem[0].checked})
+    };
+
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(reqUrl, updateOptions);
+    if (result) setFetchDbError(result);
   };
 
   const deleteItem = (id) => {
