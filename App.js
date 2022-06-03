@@ -64,6 +64,7 @@ function App() {
     setItems(myChecklistItems);
 
     const myItem = myChecklistItems.filter((item) => item.id === id);
+
     const updateOptions = {
       method: "PATCH",
       headers: {
@@ -77,9 +78,14 @@ function App() {
     if (result) setFetchDbError(result);
   };
 
-  const deleteItem = (id) => {
+  const deleteItem = async (id) => {
     const myChecklistItems = items.filter((item) => item.id !== id);
     setItems(myChecklistItems);
+
+    const deleteOptions = { method: "DELETE" };
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(reqUrl, deleteOptions);
+    if (result) setFetchDbError(result);
   };
 
   const handleSubmit = (e) => {
